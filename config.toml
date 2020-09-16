@@ -103,6 +103,7 @@ disqusShortname = ""
       image = "pic05.jpg"
       url = "blogs/blog5"
 
+
     [[params.tiles.showcase]]
       title = "Home Away from Home"
       subtitle = "Research on hotel employees' proactive service and its impact on guest satisfaction"
