@@ -1,7 +1,7 @@
 # Site settings
 baseURL = "https://junxing-portfolio-site.netlify.app/"
 languageCode = "en-us"
-title = "Forty"
+title = "Jun Xing Portfolio Website"
 theme = "forty"
 
 # Enter your tracking code to enable Google Analytics
@@ -82,7 +82,7 @@ disqusShortname = ""
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
     title = "Hi there, this is Jun"
-    subtitle = "A DATA ENTHUSIAST WHO AIMS AT BRIDGING THE GAP BETWEEN HOSPITALITY AND TECHNOLOGY."
+    subtitle = "A DATA ENTHUSIAST WHO AIMS AT BRIDGING THE GAP BETWEEN BUSINESS AND TECHNOLOGY."
     buttonText = "KNOW MORE"
 
 
@@ -92,29 +92,30 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Famiy Business Restructuring"
-      subtitle = "My bachelor dissertation: Do family businesses lay off fewer employees during financial crisis?"
+      title = "Check out my CV"
+      subtitle = "Professional Resume"
+      image = "pic04.jpg"
+      url = "blogs/ipsum"
+      
+    [[params.tiles.showcase]]
+      title = "Restructuring"
+      subtitle = "My bachelor dissertation on family business in swiss"
       image = "pic01.jpg"
       url = "blogs/aliquam"
 
+
     [[params.tiles.showcase]]
+      title = "Brexit"
+      subtitle = "How is political affiliation traslated into Brexit votes?"
+      image = "pic03.jpg"
+      url = "blogs/blog6"
+
+      
+     [[params.tiles.showcase]]
       title = "US Mask Survey"
       subtitle = "Mask acceptance rate"
       image = "pic05.jpg"
       url = "blogs/blog5"
-
-
-    [[params.tiles.showcase]]
-      title = "Home Away from Home"
-      subtitle = "Research on hotel employees' proactive service and its impact on guest satisfaction"
-      image = "pic03.jpg"
-      url = "blogs/magna"
-
-    [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
-      image = "pic04.jpg"
-      url = "blogs/ipsum"
 
     #[[params.tiles.showcase]]
      # title = "Consequat"
