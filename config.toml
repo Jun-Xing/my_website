@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Jun Xing"
-    subtitle = "A Data Enthusiast"
+    subtitle = "LBS MAM 2021"
     menu = "Showcase"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -95,7 +95,7 @@ disqusShortname = ""
       title = "Check out my CV"
       subtitle = "Professional Resume"
       image = "pic04.jpg"
-      url = "blogs/ipsum"
+      url = "blogs/blog7"
       
     [[params.tiles.showcase]]
       title = "Restructuring"
@@ -140,14 +140,15 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
-    buttonText = "Get Started"
-    url = "blogs"
+    title = "Jun's BIO"
+    subtitle = """I am fascinated by numbers and consider myself a
+    rational person with a highly analytical mind. I have traveled 
+    to 30 countries and more 
+    than 120 cities in the world. I have lived, studied, and 
+    worked in 5 countries - China, Russia, the US, Switzerland, 
+    and the UK. """
+    buttonText = "Read 25 random things about Jun"
+    url = "blogs/blog10"
 
 
   # Contact section
