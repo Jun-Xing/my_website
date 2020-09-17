@@ -92,43 +92,41 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Check out my CV"
+      title = "Check Out Jun's CV"
       subtitle = "Professional Resume"
       image = "pic04.jpg"
       url = "blogs/blog7"
       
     [[params.tiles.showcase]]
-      title = "Restructuring"
-      subtitle = "My bachelor dissertation on family business in swiss"
+      title = "Corporate Strategy"
+      subtitle = "Jun's bachelor dissertation on family business restructuring"
       image = "pic01.jpg"
       url = "blogs/aliquam"
+      
+    [[params.tiles.showcase]]
+     title = "Break the Glass Ceiling"
+     subtitle = "Are woman paid less in professional settings? "
+     image = "pic07.jpg"
+     url = "blogs/ipsum"
 
-
+    [[params.tiles.showcase]]
+      title = "Life Expectancy"
+      subtitle = "What factors affect worldwide life expectancy?"
+      image = "pic06.jpg"
+      url = "blogs/ipsum"
+      
     [[params.tiles.showcase]]
       title = "Brexit"
       subtitle = "How is political affiliation traslated into Brexit votes?"
       image = "pic03.jpg"
       url = "blogs/blog6"
-
       
-     [[params.tiles.showcase]]
+    [[params.tiles.showcase]]
       title = "US Mask Survey"
-      subtitle = "Mask acceptance rate"
+      subtitle = "Mask acceptance rate in the US"
       image = "pic05.jpg"
       url = "blogs/blog5"
-
-    #[[params.tiles.showcase]]
-     # title = "Consequat"
-     # subtitle = "Ipsum Dolor Sit Amet"
-     # image = "pic05.jpg"
-     # url = "blogs/ipsum"
-
-   # [[params.tiles.showcase]]
-    #  title = "Etiam"
-     # subtitle = "Feugiat Amet Tempus"
-     # image = "pic06.jpg"
-     # url = "blogs/ipsum"
-    # You can make more showcases by copy and pasting the code above
+      
 
   [params.blog]
     # All blogs defined in their own files. You can find example blogs
@@ -141,12 +139,12 @@ disqusShortname = ""
   [params.two]
     enable = true
     title = "Jun's BIO"
-    subtitle = """I am fascinated by numbers and consider myself a
+    subtitle = """I am fascinated by numbers. I consider myself a
     rational person with a highly analytical mind. I have traveled 
     to 30 countries and more 
     than 120 cities in the world. I have lived, studied, and 
     worked in 5 countries - China, Russia, the US, Switzerland, 
-    and the UK. """
+    and the UK. I am open to new experience and life adventures. """
     buttonText = "Read 25 random things about Jun"
     url = "blogs/blog10"
 

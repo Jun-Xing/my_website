@@ -3,7 +3,7 @@ categories:
 - ""
 - ""
 date: "2020-9-16"
-description: Mask acceptance rate in the US.
+description: Mask acceptance rate in the US
 draft: false
 image: pic05.jpg
 keywords: ""
