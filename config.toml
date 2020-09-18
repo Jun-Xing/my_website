@@ -48,16 +48,20 @@ disqusShortname = ""
       url = "#"
 
     [[params.navigation.links]]
-      name = "Blogs"
-      url = "blogs"
+      name = "Jun's CV"
+      url = "blogs/cv"
 
-    #[[params.navigation.links]]
-      #name = "Generic Blog"
-      #url = "blogs/ipsum"
+    [[params.navigation.links]]
+      name = "Academic Research"
+      url = "blogs/essay"
 
-    #[[params.navigation.links]]
-      #name = "Elements"
-      #url = "elements.html"
+    [[params.navigation.links]]
+      name = "Price Modeling Project"
+      url = "blogs/airbnb"
+      
+    [[params.navigation.links]]
+      name = "Case Study"
+      url = "blogs/airbnb"
 
     # Add custom links here by uncommenting code below. To remove links just delete
     # the [[params.navigation.links]] map associated with that link. Copy and paste
@@ -68,7 +72,7 @@ disqusShortname = ""
 
     # Button Style 1
     [[params.navigation.button1]]
-      name = "See My Projects"
+      name = "See All Files"
       url = "blogs"
 
     # Button Style 2
@@ -94,38 +98,38 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Check Out Jun's CV"
       subtitle = "Professional Resume"
-      image = "pic04.jpg"
-      url = "blogs/blog7"
+      image = "cvpic.jpg"
+      url = "blogs/cv"
       
     [[params.tiles.showcase]]
       title = "Corporate Strategy"
       subtitle = "Jun's bachelor dissertation on family business restructuring"
-      image = "pic01.jpg"
-      url = "blogs/aliquam"
+      image = "essay.jpg"
+      url = "blogs/essay"
       
     [[params.tiles.showcase]]
      title = "Break the Glass Ceiling"
-     subtitle = "Are woman paid less in professional settings? "
-     image = "pic07.jpg"
-     url = "blogs/ipsum"
+     subtitle = "Looking into gender discrimination in salary"
+     image = "genderpay.jpg"
+     url = "blogs/gendercase"
 
     [[params.tiles.showcase]]
-      title = "Life Expectancy"
-      subtitle = "What factors affect worldwide life expectancy?"
-      image = "pic06.jpg"
-      url = "blogs/ipsum"
+      title = "Price Modeling"
+      subtitle = "How to predict the price of Airbnb stays?"
+      image = "copenhagen.jpg"
+      url = "blogs/airbnb"
       
     [[params.tiles.showcase]]
-      title = "Brexit"
+      title = "Brexit Voting"
       subtitle = "How is political affiliation traslated into Brexit votes?"
-      image = "pic03.jpg"
-      url = "blogs/blog6"
+      image = "brexitpic.jpg"
+      url = "blogs/brexit"
       
     [[params.tiles.showcase]]
       title = "US Mask Survey"
       subtitle = "Mask acceptance rate in the US"
-      image = "pic05.jpg"
-      url = "blogs/blog5"
+      image = "mask.jpg"
+      url = "blogs/maskacceptance"
       
 
   [params.blog]
@@ -146,7 +150,7 @@ disqusShortname = ""
     worked in 5 countries - China, Russia, the US, Switzerland, 
     and the UK. I am open to new experience and life adventures. """
     buttonText = "Read 25 random things about Jun"
-    url = "blogs/blog10"
+    url = "blogs/intro25"
 
 
   # Contact section

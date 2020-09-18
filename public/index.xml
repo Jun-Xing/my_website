@@ -59,6 +59,42 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>25 Random Things about Myself</title>
+      <link>/blogs/intro25/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/intro25/</guid>
+      <description>So far, I have traveled to 30 countries and more than 120 cities in the world. My favorite city is London. It is such a wonderful melting pot, blending all kinds of cultures seamlessly, and the Chinese food there is beyond-words delicious. The rain bothers me a little, though, and so does the British humour that I don’t quite comprehend. I have visited Paris a couple of times but never went to see the cathedral Notre Dame de Paris.</description>
+    </item>
+    
+    <item>
+      <title>A Case Study on Gender Discrimination</title>
+      <link>/blogs/gendercase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/gendercase/</guid>
+      <description>Loading the data omega &amp;lt;- read_csv(here::here(&amp;quot;data&amp;quot;, &amp;quot;gender.csv&amp;quot;)) glimpse(omega) # examine the data frame ## Rows: 50 ## Columns: 3 ## $ salary &amp;lt;dbl&amp;gt; 81894, 69517, 68589, 74881, 65598, 76840, 78800, 70033, 63… ## $ gender &amp;lt;chr&amp;gt; &amp;quot;male&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;m… ## $ experience &amp;lt;dbl&amp;gt; 16, 25, 15, 33, 16, 19, 32, 34, 1, 44, 7, 14, 33, 19, 24, …  Relationship Salary - Gender ?</description>
+    </item>
+    
+    <item>
+      <title>Family Ownership and Downsizing in Switzerland</title>
+      <link>/blogs/essay/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/essay/</guid>
+      <description>Read and Download the dissertation by clicking here.</description>
+    </item>
+    
+    <item>
+      <title>How is political affiliation translated to Brexit votes?</title>
+      <link>/blogs/brexit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/brexit/</guid>
+      <description>Fetching data brexit_results &amp;lt;- read_csv(here::here(&amp;quot;Data&amp;quot;,&amp;quot;brexit_results.csv&amp;quot;)) brexit_long&amp;lt;-brexit_results%&amp;gt;% pivot_longer( cols=c(con_2015,lab_2015,ld_2015,ukip_2015), names_to=&amp;quot;party&amp;quot;,values_to=&amp;quot;proportion&amp;quot;)%&amp;gt;% select(c(Seat,leave_share,party,proportion))  Plotting the chart brexit_graph &amp;lt;- ggplot(brexit_long)+ geom_point(aes(x=proportion,y=leave_share,color=party),alpha=0.4)+ stat_smooth(data=subset(brexit_long,party==&amp;quot;con_2015&amp;quot;), aes(x=proportion,y=leave_share), color=&amp;quot;#0087DC&amp;quot;, method = &amp;quot;lm&amp;quot;, se = T) + stat_smooth(data=subset(brexit_long, party==&amp;quot;lab_2015&amp;quot;), aes(x=proportion,y=leave_share), color=&amp;quot;#DC241f&amp;quot;, method = &amp;quot;lm&amp;quot;, se =T) + stat_smooth(data=subset(brexit_long,party==&amp;quot;ld_2015&amp;quot;), aes(x=proportion,y=leave_share), color=&amp;quot;#FDBB30&amp;quot;, method = &amp;quot;lm&amp;quot;, se = T) + stat_smooth(data=subset(brexit_long,party==&amp;quot;ukip_2015&amp;quot;), aes(x=proportion,y=leave_share), color=&amp;quot;#FFFF00&amp;quot;, method = &amp;quot;lm&amp;quot;, se = T)+ labs( title = &amp;quot;Political Affiliation &amp;amp; Brexit Voting&amp;quot;, x = &amp;quot;Party % 2015 general election&amp;quot;, y = &amp;quot;Leave % 2016 Brexit referendum&amp;quot;, fill = &amp;quot;Party&amp;quot;) + scale_color_manual( values = c(&amp;quot;#0087DC&amp;quot;, &amp;quot;#DC241f&amp;quot;, &amp;quot;#FDBB30&amp;quot;, &amp;quot;#FFFF00&amp;quot;), labels = c(&amp;quot;Conservative&amp;quot;, &amp;quot;Labour&amp;quot;, &amp;quot;Lib Dems&amp;quot;, &amp;quot;UKIP&amp;quot;)) + scale_shape_manual(values = c(16, 17)) + guides(linetype = guide_legend(override.</description>
+    </item>
+    
+    <item>
       <title>How political affiliation is translated to Brexit votes</title>
       <link>/blogs/blog6/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -69,12 +105,31 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     
     <item>
       <title>Mask Acceptance Rate</title>
-      <link>/blogs/blog5/</link>
+      <link>/blogs/maskacceptance/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blogs/blog5/</guid>
+      <guid>/blogs/maskacceptance/</guid>
       <description>NYT mask use Github source for data https://github.com/nytimes/covid-19-data/tree/master/mask-use
  Getting the data #Source for data url &amp;lt;- &amp;quot;https://github.com/nytimes/covid-19-data/raw/master/mask-use/mask-use-by-county.csv&amp;quot; nyt_mask_survey &amp;lt;- read_csv(url) nyt_mask_survey &amp;lt;- nyt_mask_survey %&amp;gt;% clean_names() %&amp;gt;% mutate( mostly_yes= frequently+always, mostly_no = never+rarely, delta = mostly_yes-mostly_no ) glimpse(nyt_mask_survey) ## Rows: 3,142 ## Columns: 9 ## $ countyfp &amp;lt;chr&amp;gt; &amp;quot;01001&amp;quot;, &amp;quot;01003&amp;quot;, &amp;quot;01005&amp;quot;, &amp;quot;01007&amp;quot;, &amp;quot;01009&amp;quot;, &amp;quot;01011&amp;quot;, &amp;quot;010… ## $ never &amp;lt;dbl&amp;gt; 0.053, 0.083, 0.067, 0.020, 0.053, 0.031, 0.102, 0.152, 0.… ## $ rarely &amp;lt;dbl&amp;gt; 0.</description>
+    </item>
+    
+    <item>
+      <title>Mask Acceptance Rate Survey in the U.S.</title>
+      <link>/blogs/maskacceptance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/maskacceptance/</guid>
+      <description>NYT mask use Github source for data https://github.com/nytimes/covid-19-data/tree/master/mask-use
+ Getting the data #Source for data url &amp;lt;- &amp;quot;https://github.com/nytimes/covid-19-data/raw/master/mask-use/mask-use-by-county.csv&amp;quot; nyt_mask_survey &amp;lt;- read_csv(url) nyt_mask_survey &amp;lt;- nyt_mask_survey %&amp;gt;% clean_names() %&amp;gt;% mutate( mostly_yes= frequently+always, mostly_no = never+rarely, delta = mostly_yes-mostly_no ) glimpse(nyt_mask_survey) ## Rows: 3,142 ## Columns: 9 ## $ countyfp &amp;lt;chr&amp;gt; &amp;quot;01001&amp;quot;, &amp;quot;01003&amp;quot;, &amp;quot;01005&amp;quot;, &amp;quot;01007&amp;quot;, &amp;quot;01009&amp;quot;, &amp;quot;01011&amp;quot;, &amp;quot;010… ## $ never &amp;lt;dbl&amp;gt; 0.053, 0.083, 0.067, 0.020, 0.053, 0.031, 0.102, 0.152, 0.… ## $ rarely &amp;lt;dbl&amp;gt; 0.</description>
+    </item>
+    
+    <item>
+      <title>Predicting the Price of Airbnb Stays in Copenhagen</title>
+      <link>/blogs/airbnb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/airbnb/</guid>
+      <description>Introduction Copenhagen, the happiest city in the world, Who doesn’t want to go there! Happiness comes at a price though, you’ll need to find a place to stay. What better way to look for a place to stay than on AirBnB and us being students, would like to know what this will cost us. This is where the MAM program from LBS is already paying itself off.</description>
     </item>
     
     <item>
@@ -83,6 +138,15 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/blogs/blog7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Resume - Jun XING</title>
+      <link>/blogs/cv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blogs/cv/</guid>
       <description></description>
     </item>
     

@@ -7,7 +7,7 @@ description: Mask acceptance rate in the US
 draft: false
 image: pic05.jpg
 keywords: ""
-slug: blog5
+slug: maskacceptance
 title: Mask Acceptance Rate
 ---
 

@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Jun is a student in Master in Analytics and Management programme at LBS.">
+	<meta name="author" content="Jun Xing">
+	<meta name="generator" content="Hugo 0.74.3" />
+	<title>A Case Study on Gender Discrimination &middot; Jun Xing Portfolio Website</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Jun Xing</strong> <span>LBS MAM 2021</span></a>
+        <nav>
+            <a href="#menu">Showcase</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs/cv">Jun&#39;s CV</a></li>
+            
+                <li><a href="/blogs/essay">Academic Research</a></li>
+            
+                <li><a href="/blogs/airbnb">Price Modeling Project</a></li>
+            
+                <li><a href="/blogs/airbnb">Case Study</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">See All Files</a></li>
+            
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>A Case Study on Gender Discrimination</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/genderpay.jpg" alt="" /></span>
+                            
+                            
+
+
+<div id="loading-the-data" class="section level2">
+<h2>Loading the data</h2>
+<pre class="r"><code>omega &lt;- read_csv(here::here(&quot;data&quot;, &quot;gender.csv&quot;))
+glimpse(omega) # examine the data frame</code></pre>
+<pre><code>## Rows: 50
+## Columns: 3
+## $ salary     &lt;dbl&gt; 81894, 69517, 68589, 74881, 65598, 76840, 78800, 70033, 63…
+## $ gender     &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;m…
+## $ experience &lt;dbl&gt; 16, 25, 15, 33, 16, 19, 32, 34, 1, 44, 7, 14, 33, 19, 24, …</code></pre>
+</div>
+<div id="relationship-salary---gender" class="section level2">
+<h2>Relationship Salary - Gender ?</h2>
+<pre class="r"><code># Summary Statistics of salary by gender
+mosaic::favstats (salary ~ gender, data=omega)</code></pre>
+<pre><code>##   gender   min    Q1 median    Q3   max  mean   sd  n missing
+## 1 female 47033 60338  64618 70033 78800 64543 7567 26       0
+## 2   male 54768 68331  74675 78568 84576 73239 7463 24       0</code></pre>
+<pre class="r"><code># Dataframe with two rows (male-female) and having as columns gender, mean, SD, sample size, 
+# the t-critical value, the standard error, the margin of error, 
+# and the low/high endpoints of a 95% condifence interval
+salary_sum_stats &lt;- omega %&gt;%
+  group_by(gender) %&gt;%
+  summarise(mean_salary = mean(salary),
+            sd_salary = sd(salary),
+            count = n(),
+            se_salary = sd_salary / sqrt(count),
+            t_critical = qt(0.975, count - 1),
+            margin_of_error = t_critical * se_salary,
+            salary_low = mean_salary - margin_of_error,
+            salary_high = mean_salary + margin_of_error)
+
+salary_sum_stats</code></pre>
+<pre><code>## # A tibble: 2 x 9
+##   gender mean_salary sd_salary count se_salary t_critical margin_of_error
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;
+## 1 female      64543.     7567.    26     1484.       2.06           3056.
+## 2 male        73239.     7463.    24     1523.       2.07           3151.
+## # … with 2 more variables: salary_low &lt;dbl&gt;, salary_high &lt;dbl&gt;</code></pre>
+<blockquote>
+<p>What can you conclude from your analysis? A couple of sentences would be enough</p>
+</blockquote>
+<p>Answer:
+In this sample size, male’s average salary is higher than the female’s. Male’s 95% confidence interval is also higher than the female’s with no overlaps. If we take another sample, we are quite confident that the male’s average salary would be higher than the female’s in that sample too.</p>
+<pre class="r"><code># hypothesis testing using t.test() 
+t.test(salary ~ gender, data = omega)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  salary by gender
+## t = -4, df = 48, p-value = 2e-04
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -12973  -4420
+## sample estimates:
+## mean in group female   mean in group male 
+##                64543                73239</code></pre>
+<pre class="r"><code># hypothesis testing using infer package
+salary_diff &lt;- omega %&gt;%
+  infer::specify(salary ~ gender) %&gt;%
+  infer::calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+
+salary_gender_null &lt;- omega %&gt;%
+  infer::specify(salary ~ gender) %&gt;%
+  infer::hypothesize(null = &quot;independence&quot;) %&gt;%
+  infer::generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  infer::calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+
+salary_gender_null %&gt;% visualize() +
+  infer::shade_p_value(obs_stat = salary_diff, direction = &quot;two-sided&quot;)</code></pre>
+<p><img src="/blogs/gendercase_files/figure-html/hypothesis_testing1-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>salary_gender_null %&gt;%
+  infer::get_p_value(obs_stat = salary_diff, direction = &quot;two_sided&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1       0</code></pre>
+<blockquote>
+<p>What can you conclude from your analysis? A couple of sentences would be enough</p>
+</blockquote>
+<p>Answer:
+We can refuse the null hypothesis. The mean salaries of male and female are significantly different.</p>
+</div>
+<div id="relationship-experience---gender" class="section level2">
+<h2>Relationship Experience - Gender?</h2>
+<pre class="r"><code># Summary Statistics of salary by gender
+favstats (experience ~ gender, data=omega)</code></pre>
+<pre><code>##   gender min    Q1 median   Q3 max  mean    sd  n missing
+## 1 female   0  0.25    3.0 14.0  29  7.38  8.51 26       0
+## 2   male   1 15.75   19.5 31.2  44 21.12 10.92 24       0</code></pre>
+<p>Based on this evidence, can you conclude that there is a significant difference between the experience of the male and female executives? Perform similar analyses as in the previous section. Does your conclusion validate or endanger your conclusion about the difference in male and female salaries?</p>
+<pre class="r"><code># hypothesis testing using t.test() 
+t.test(experience ~ gender, data = omega)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  experience by gender
+## t = -5, df = 43, p-value = 1e-05
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -19.35  -8.13
+## sample estimates:
+## mean in group female   mean in group male 
+##                 7.38                21.12</code></pre>
+<pre class="r"><code># hypothesis testing using infer package
+experience_diff &lt;- omega %&gt;%
+  specify(experience ~ gender) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+
+experience_gender_null &lt;- omega %&gt;%
+  specify(experience ~ gender) %&gt;%
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+
+experience_gender_null %&gt;% visualize() +
+  shade_p_value(obs_stat = experience_diff, direction = &quot;two-sided&quot;)</code></pre>
+<p><img src="/blogs/gendercase_files/figure-html/hypothesis_testing-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>experience_gender_null %&gt;%
+  get_p_value(obs_stat = experience_diff, direction = &quot;two_sided&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1       0</code></pre>
+<p>Answer:
+There is a significant difference between the average experience of the male and female executives. But it does not prove the correlation between salary and experience, so it can neither validate nor endanger the previous conclusion.</p>
+</div>
+<div id="relationship-salary---experience" class="section level2">
+<h2>Relationship Salary - Experience ?</h2>
+<pre class="r"><code>ggplot(omega, aes(experience, salary)) +
+  geom_point() +
+  geom_smooth() +
+  labs(
+    title = &quot;The Relationship between Salary and Experience&quot;,
+    x = &quot;Experience&quot;,
+    y = &quot;Salary&quot;
+  )</code></pre>
+<p><img src="/blogs/gendercase_files/figure-html/salary_exp_scatter-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-correlations-between-the-data" class="section level2">
+<h2>Check correlations between the data</h2>
+<pre class="r"><code>omega %&gt;% 
+  select(gender, experience, salary) %&gt;% #order variables they will appear in ggpairs()
+  ggpairs(aes(colour=gender, alpha = 0.3))+
+  theme_bw()</code></pre>
+<p><img src="/blogs/gendercase_files/figure-html/ggpairs-1.png" width="648" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>Look at the salary vs experience scatterplot. What can you infer from this plot? Explain in a couple of sentences</p>
+</blockquote>
+<p>Answer:
+Salary and experience do have strong correlation and the correlation is higher within female.</p>
+</div>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://twitter.com/XingAmber" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                
+                    <li><a href="https://github.com/Jun-Xing" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/jun-xing-amber/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; London Business School</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

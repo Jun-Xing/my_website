@@ -7,7 +7,7 @@ description: Mask acceptance rate in the US
 draft: false
 image: pic05.jpg
 keywords: ""
-slug: blog5
+slug: maskacceptance
 title: Mask Acceptance Rate
 ---
 
@@ -54,44 +54,44 @@ glimpse(nyt_mask_survey)</code></pre>
 # The id field is the FIPS code for the county
 county_map %&gt;% 
   sample_n(5)</code></pre>
-<pre><code>##      long      lat  order  hole piece            group    id
-## 1  275805  -243578  59677 FALSE     1 0500000US19149.1 19149
-## 2 1803817 -1505811  38450 FALSE     1 0500000US12109.1 12109
-## 3  884701  -922634 101499 FALSE     1 0500000US29069.1 29069
-## 4 1528519  -626399 184730 FALSE     1 0500000US54099.1 54099
-## 5  842370 -1674645  74397 FALSE     1 0500000US22101.1 22101</code></pre>
+<pre><code>##       long      lat  order  hole piece            group    id
+## 1   626631 -1215490  19739 FALSE     1 0500000US05019.1 05019
+## 2  2085880  -315401 115289 FALSE     1 0500000US34011.1 34011
+## 3   900615 -1012298  22194 FALSE     1 0500000US05093.1 05093
+## 4 -1712693  -484397  24444 FALSE     1 0500000US06017.1 06017
+## 5  1431435 -1426795  45364 FALSE     1 0500000US13253.1 13253</code></pre>
 <pre class="r"><code>county_data %&gt;%
     sample_n(5)</code></pre>
-<pre><code>##      id            name state census_region      pop_dens   pop_dens4
-## 1 21117   Kenton County    KY         South [ 1000, 5000) [118,71672]
-## 2 16063  Lincoln County    ID          West [    0,   10) [  0,   17)
-## 3 12047 Hamilton County    FL         South [   10,   50) [ 17,   45)
-## 4 21205    Rowan County    KY         South [   50,  100) [ 45,  118)
-## 5 28107   Panola County    MS         South [   50,  100) [ 45,  118)
-##     pop_dens6   pct_black    pop female white black travel_time land_area
-## 1 [215,71672] [ 2.0, 5.0) 163929   50.6  91.6   4.9        23.0       160
-## 2 [  0,    9) [ 0.0, 2.0)   5316   48.7  95.8   0.5        29.7      1201
-## 3 [ 25,   45) [25.0,50.0)  14048   42.1  62.6  33.9        24.2       514
-## 4 [ 82,  215) [ 0.0, 2.0)  23655   51.5  96.0   1.9        21.0       280
-## 5 [ 45,   82) [25.0,50.0)  34444   51.7  48.8  49.6        25.8       685
-##   hh_income su_gun4 su_gun6  fips votes_dem_2016 votes_gop_2016
-## 1     54270 [ 5, 8) [ 7, 8) 21117          24213          42958
-## 2     42433 [11,54] [12,54] 16063            360           1184
-## 3     37716 [ 8,11) [ 8,10) 12047           1899           3439
-## 4     35236 [ 8,11) [ 8,10) 21205           3295           5174
-## 5     35715 [11,54] [10,12) 28107           7300           7371
-##   total_votes_2016 per_dem_2016 per_gop_2016 diff_2016 per_dem_2012
-## 1            71905        0.337        0.597     18745        0.368
-## 2             1748        0.206        0.677       824        0.264
-## 3             5451        0.348        0.631      1540        0.412
-## 4             8829        0.373        0.586      1879        0.450
-## 5            14854        0.491        0.496        71        0.540
-##   per_gop_2012 diff_2012 winner partywinner16 winner12 partywinner12 flipped
-## 1        0.612     16470  Trump    Republican   Romney    Republican      No
-## 2        0.703       712  Trump    Republican   Romney    Republican      No
-## 3        0.580       911  Trump    Republican   Romney    Republican      No
-## 4        0.528       597  Trump    Republican   Romney    Republican      No
-## 5        0.453      1450  Trump    Republican    Obama      Democrat     Yes</code></pre>
+<pre><code>##      id          name state census_region      pop_dens   pop_dens4   pop_dens6
+## 1 46125 Turner County    SD       Midwest [   10,   50) [  0,   17) [  9,   25)
+## 2 05017 Chicot County    AR         South [   10,   50) [ 17,   45) [  9,   25)
+## 3 18089   Lake County    IN       Midwest [  500, 1000) [118,71672] [215,71672]
+## 4 13177    Lee County    GA         South [   50,  100) [ 45,  118) [ 82,  215)
+## 5 37145 Person County    NC         South [   50,  100) [ 45,  118) [ 82,  215)
+##     pct_black    pop female white black travel_time land_area hh_income su_gun4
+## 1 [ 0.0, 2.0)   8272   49.7  97.1   0.5        27.4       617     51925 [ 0, 5)
+## 2 [50.0,85.3]  11180   50.8  43.5  54.7        21.4       644     26201 [ 0, 5)
+## 3 [25.0,50.0) 490228   51.7  70.7  25.5        27.6       499     49035 [ 5, 8)
+## 4 [15.0,25.0)  29191   49.9  75.6  20.4        21.2       356     60104 [ 8,11)
+## 5 [25.0,50.0)  39132   51.3  70.1  27.2        30.1       392     42317 [11,54]
+##   su_gun6  fips votes_dem_2016 votes_gop_2016 total_votes_2016 per_dem_2016
+## 1 [ 0, 4) 46125            961           2937             4150        0.232
+## 2 [ 4, 7)  5017           2350           1716             4149        0.566
+## 3 [ 4, 7) 18089         116896          75565           200247        0.584
+## 4 [ 8,10) 13177           3166          10641            14106        0.224
+## 5 [10,12) 37145           7772          11116            19303        0.403
+##   per_gop_2016 diff_2016 per_dem_2012 per_gop_2012 diff_2012  winner
+## 1        0.708      1976        0.335        0.645      1304   Trump
+## 2        0.414       634        0.607        0.383       979 Clinton
+## 3        0.377     41331        0.649        0.339     62427 Clinton
+## 4        0.754      7475        0.234        0.758      7123   Trump
+## 5        0.576      3344        0.441        0.551      2083   Trump
+##   partywinner16 winner12 partywinner12 flipped
+## 1    Republican   Romney    Republican      No
+## 2      Democrat    Obama      Democrat      No
+## 3      Democrat    Obama      Democrat      No
+## 4    Republican   Romney    Republican      No
+## 5    Republican   Romney    Republican      No</code></pre>
 <pre class="r"><code>glimpse(county_data)</code></pre>
 <pre><code>## Rows: 3,195
 ## Columns: 32
