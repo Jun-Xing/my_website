@@ -71,9 +71,9 @@ disqusShortname = ""
     #    url = "UrlOfLink"
 
     # Button Style 1
-    [[params.navigation.button1]]
-      name = "See All Files"
-      url = "blogs"
+    #[[params.navigation.button1]]
+      #name = "See All Files"
+      #url = "blogs"
 
     # Button Style 2
     #[[params.navigation.button2]]
@@ -108,22 +108,23 @@ disqusShortname = ""
       url = "blogs/essay"
       
     [[params.tiles.showcase]]
-     title = "Break the Glass Ceiling"
-     subtitle = "Looking into gender discrimination in salary"
-     image = "genderpay.jpg"
-     url = "blogs/gendercase"
-
-    [[params.tiles.showcase]]
       title = "Price Modeling"
       subtitle = "How to predict the price of Airbnb stays?"
       image = "copenhagen.jpg"
       url = "blogs/airbnb"
+
       
     [[params.tiles.showcase]]
       title = "Brexit Voting"
       subtitle = "How is political affiliation traslated into Brexit votes?"
       image = "brexitpic.jpg"
       url = "blogs/brexit"
+      
+    [[params.tiles.showcase]]
+     title = "Break the Glass Ceiling"
+     subtitle = "Looking into gender discrimination in salary"
+     image = "genderpay.jpg"
+     url = "blogs/gendercase"
       
     [[params.tiles.showcase]]
       title = "US Mask Survey"
