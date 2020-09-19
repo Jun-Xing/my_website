@@ -5,11 +5,14 @@ categories:
 date: "2020-9-16"
 description: How polical affiliation translates into Brexit votes
 draft: false
-image: brexitpic.jpg
 keywords: ""
 slug: brexit
 title: How is political affiliation translated to Brexit votes?
 ---
+## Bakcground information
+
+In 2016, the UK voted to leave the European Union. We would like to understand where each political party stands in terms of brexit voting. Information is gathered on the composition of parties in the 2015 general election and their votes on Brexit in the 2016 Brexit referendum.
+
 
 ```{r, setup, echo=FALSE}
 knitr::opts_chunk$set(
@@ -41,7 +44,6 @@ library(plotly)
 ## Fetching data
 ```{r read_data}
 
-
 brexit_results <- read_csv(here::here("Data","brexit_results.csv"))
 
 brexit_long<-brexit_results%>%
@@ -50,10 +52,9 @@ pivot_longer(
     names_to="party",values_to="proportion")%>%
     select(c(Seat,leave_share,party,proportion))
 
-
 ```
 
-## Plotting the chart
+## Data visualization
 ```{r plot_chart, out.width="100%", fig.width=4.5, fig.height=3}
 brexit_graph <- ggplot(brexit_long)+
   geom_point(aes(x=proportion,y=leave_share,color=party),alpha=0.4)+
@@ -102,3 +103,6 @@ brexit_graph <- ggplotly(brexit_graph)
 brexit_graph
 ```
 
+## Findings
+
+Looking at the slope of the four fitted lines of the four parties, it is clear that UKIP was a strong advocate for Brexit, while the conservatives, after a disastrous election and several cabinet reshuffles, decided to back Brexit as well. On the other hand, the Liberal Democrats seems to be very much against Brexit, as their logan goes “Stop Brexit, build a brighter future.” The Labour howver, takes a more neutral stance towards Brexit, which reflect the split of opinion within the party.

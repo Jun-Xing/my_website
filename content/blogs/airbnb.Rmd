@@ -281,7 +281,7 @@ median_per_neighborhood <- listings_filtered_4nights %>%
   group_by(neighbourhood_cleansed) %>% 
   summarise(median_price = median(price))
 #Price per night for each neighborhood
-median_per_neighborhood %>% 
+neighborhood <- median_per_neighborhood %>% 
   ggplot(aes(
     x = reorder(neighbourhood_cleansed, median_price),
     y = median_price
@@ -297,6 +297,9 @@ median_per_neighborhood %>%
   coord_flip() +
   theme_classic() +
   NULL
+
+neighborhood <- ggplotly(neighborhood)
+neighborhood
 
 ```
 The Indre By area in Copenhagen is the central harbour area and is the most expensive area for AirBnB prices. This confirms that the neighborhood variable will have a significant impact on the price variable.

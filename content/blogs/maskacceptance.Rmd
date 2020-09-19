@@ -5,7 +5,6 @@ categories:
 date: "2020-9-16"
 description: Mask acceptance rate in the US
 draft: false
-image: mask.jpg
 keywords: ""
 slug: maskacceptance
 title: Mask Acceptance Rate Survey in the U.S.
@@ -35,7 +34,7 @@ library(skimr)
 library(vroom)
 library(mosaic)
 library(here)
-
+library(plotly)
 #remotes::install_github("kjhealy/socviz")
 library(socviz)
 ```
@@ -89,8 +88,6 @@ glimpse(county_map)
 # ... but to create a map, we translate these 3195 counties to 191,382 polygons!
 
 
-
-
 ```
 
 ## Joing the files
@@ -104,7 +101,6 @@ We have three files
 
 
 ```{r, join_data}
-
 
 county_full <- left_join(county_map, county_data, by = "id")
 
@@ -124,8 +120,6 @@ p <- ggplot(data = county_masks_full,
 p1 <- p + 
   geom_polygon(color = "gray90", size = 0.05) + 
   coord_equal()
-
-
 
 p2 <- p1 + 
   scale_fill_gradient(low = '#ffffcc', high= '#006837')
