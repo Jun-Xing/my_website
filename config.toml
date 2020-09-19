@@ -48,7 +48,11 @@ disqusShortname = ""
       url = "#"
 
     [[params.navigation.links]]
-      name = "Jun's CV"
+      name = "25 Random Things About Jun"
+      url = "blogs/intro25"
+
+    [[params.navigation.links]]
+      name = "Jun's Resume"
       url = "blogs/cv"
 
     [[params.navigation.links]]
@@ -60,7 +64,7 @@ disqusShortname = ""
       url = "blogs/airbnb"
       
     [[params.navigation.links]]
-      name = "Case Study"
+      name = "Airbnb Case Study"
       url = "blogs/airbnb"
 
     # Add custom links here by uncommenting code below. To remove links just delete
@@ -128,7 +132,7 @@ disqusShortname = ""
       
     [[params.tiles.showcase]]
       title = "US Mask Survey"
-      subtitle = "Mask acceptance rate in the US"
+      subtitle = "Looking into mask acceptance rate in the US"
       image = "mask.jpg"
       url = "blogs/maskacceptance"
       
@@ -182,7 +186,7 @@ disqusShortname = ""
 
     [[params.contact.phone]]
     title = "Phone"
-    phone = "+41 78 734 55 89"
+    phone = "+44 7543 391412"
 
     [[params.contact.address]]
     title = "Address"
@@ -210,6 +214,12 @@ disqusShortname = ""
       icon = "fa-linkedin"
       url= "https://www.linkedin.com/in/jun-xing-amber/"
       label = "LinkedIn"
+      
+    [[params.footer.social]]
+      icon = "fa-instagram"
+      url= "https://www.instagram.com/ambrrrex/"
+      label = "Instagram"
+
 
     [[params.footer.quicklinks]]
       text = "Design: "

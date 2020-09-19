@@ -5,35 +5,52 @@ categories:
 date: "2020-9-16"
 description: Gender discrimination
 draft: false
-image: genderpay.jpg
 keywords: ""
 slug: gendercase
 title: A Case Study on Gender Discrimination
 ---
 
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plotly-main/plotly-latest.min.js"></script>
 
 
-<div id="loading-the-data" class="section level2">
-<h2>Loading the data</h2>
-<pre class="r"><code>omega &lt;- read_csv(here::here(&quot;data&quot;, &quot;gender.csv&quot;))
-glimpse(omega) # examine the data frame</code></pre>
+<div id="background-information" class="section level2">
+<h2>Background information</h2>
+<p>At the last board meeting of ABC Group, the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women. This seemed like a considerable difference, so it was decided that a further analysis of the company salaries was warranted. In the following sections an analysis is carried out.</p>
+</div>
+<div id="objective" class="section level2">
+<h2>Objective</h2>
+<p>The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor.</p>
+</div>
+<div id="data-anlysis" class="section level2">
+<h2>Data anlysis</h2>
+<div id="loading-the-data" class="section level3">
+<h3>Loading the data</h3>
+<pre class="r"><code>genderpay &lt;- read_csv(here::here(&quot;data&quot;, &quot;gender.csv&quot;))
+glimpse(genderpay) # examine the data frame</code></pre>
 <pre><code>## Rows: 50
 ## Columns: 3
 ## $ salary     &lt;dbl&gt; 81894, 69517, 68589, 74881, 65598, 76840, 78800, 70033, 63…
 ## $ gender     &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;m…
 ## $ experience &lt;dbl&gt; 16, 25, 15, 33, 16, 19, 32, 34, 1, 44, 7, 14, 33, 19, 24, …</code></pre>
 </div>
-<div id="relationship-salary---gender" class="section level2">
-<h2>Relationship Salary - Gender ?</h2>
+<div id="determine-the-relationship-between-salary-and-gender" class="section level3">
+<h3>Determine the relationship between Salary and Gender</h3>
 <pre class="r"><code># Summary Statistics of salary by gender
-mosaic::favstats (salary ~ gender, data=omega)</code></pre>
+mosaic::favstats (salary ~ gender, data=genderpay)</code></pre>
 <pre><code>##   gender   min    Q1 median    Q3   max  mean   sd  n missing
 ## 1 female 47033 60338  64618 70033 78800 64543 7567 26       0
 ## 2   male 54768 68331  74675 78568 84576 73239 7463 24       0</code></pre>
 <pre class="r"><code># Dataframe with two rows (male-female) and having as columns gender, mean, SD, sample size, 
 # the t-critical value, the standard error, the margin of error, 
 # and the low/high endpoints of a 95% condifence interval
-salary_sum_stats &lt;- omega %&gt;%
+salary_sum_stats &lt;- genderpay %&gt;%
   group_by(gender) %&gt;%
   summarise(mean_salary = mean(salary),
             sd_salary = sd(salary),
@@ -51,13 +68,11 @@ salary_sum_stats</code></pre>
 ## 1 female      64543.     7567.    26     1484.       2.06           3056.
 ## 2 male        73239.     7463.    24     1523.       2.07           3151.
 ## # … with 2 more variables: salary_low &lt;dbl&gt;, salary_high &lt;dbl&gt;</code></pre>
-<blockquote>
-<p>What can you conclude from your analysis? A couple of sentences would be enough</p>
-</blockquote>
-<p>Answer:
-In this sample size, male’s average salary is higher than the female’s. Male’s 95% confidence interval is also higher than the female’s with no overlaps. If we take another sample, we are quite confident that the male’s average salary would be higher than the female’s in that sample too.</p>
+<div id="analysis" class="section level4">
+<h4>Analysis:</h4>
+<p>In this sample size, male’s average salary is higher than the female’s. Male’s 95% confidence interval is also higher than the female’s with no overlaps. If we take another sample, we are quite confident that the male’s average salary would be higher than the female’s in that sample too.</p>
 <pre class="r"><code># hypothesis testing using t.test() 
-t.test(salary ~ gender, data = omega)</code></pre>
+t.test(salary ~ gender, data = genderpay)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -70,11 +85,11 @@ t.test(salary ~ gender, data = omega)</code></pre>
 ## mean in group female   mean in group male 
 ##                64543                73239</code></pre>
 <pre class="r"><code># hypothesis testing using infer package
-salary_diff &lt;- omega %&gt;%
+salary_diff &lt;- genderpay %&gt;%
   infer::specify(salary ~ gender) %&gt;%
   infer::calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
 
-salary_gender_null &lt;- omega %&gt;%
+salary_gender_null &lt;- genderpay %&gt;%
   infer::specify(salary ~ gender) %&gt;%
   infer::hypothesize(null = &quot;independence&quot;) %&gt;%
   infer::generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
@@ -89,22 +104,24 @@ salary_gender_null %&gt;% visualize() +
 ##   p_value
 ##     &lt;dbl&gt;
 ## 1       0</code></pre>
-<blockquote>
-<p>What can you conclude from your analysis? A couple of sentences would be enough</p>
-</blockquote>
-<p>Answer:
-We can refuse the null hypothesis. The mean salaries of male and female are significantly different.</p>
 </div>
-<div id="relationship-experience---gender" class="section level2">
-<h2>Relationship Experience - Gender?</h2>
+<div id="anlysis" class="section level4">
+<h4>Anlysis:</h4>
+<p>The null hypothesis is rejected. The mean salaries of male and female are significantly different.</p>
+</div>
+</div>
+<div id="explore-the-relationship-between-professional-experience-and-gender" class="section level3">
+<h3>Explore the relationship between Professional Experience and Gender</h3>
 <pre class="r"><code># Summary Statistics of salary by gender
-favstats (experience ~ gender, data=omega)</code></pre>
+favstats (experience ~ gender, data=genderpay)</code></pre>
 <pre><code>##   gender min    Q1 median   Q3 max  mean    sd  n missing
 ## 1 female   0  0.25    3.0 14.0  29  7.38  8.51 26       0
 ## 2   male   1 15.75   19.5 31.2  44 21.12 10.92 24       0</code></pre>
-<p>Based on this evidence, can you conclude that there is a significant difference between the experience of the male and female executives? Perform similar analyses as in the previous section. Does your conclusion validate or endanger your conclusion about the difference in male and female salaries?</p>
+</div>
+<div id="hypothesis-testing" class="section level3">
+<h3>Hypothesis testing</h3>
 <pre class="r"><code># hypothesis testing using t.test() 
-t.test(experience ~ gender, data = omega)</code></pre>
+t.test(experience ~ gender, data = genderpay)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -117,11 +134,11 @@ t.test(experience ~ gender, data = omega)</code></pre>
 ## mean in group female   mean in group male 
 ##                 7.38                21.12</code></pre>
 <pre class="r"><code># hypothesis testing using infer package
-experience_diff &lt;- omega %&gt;%
+experience_diff &lt;- genderpay %&gt;%
   specify(experience ~ gender) %&gt;%
   calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
 
-experience_gender_null &lt;- omega %&gt;%
+experience_gender_null &lt;- genderpay %&gt;%
   specify(experience ~ gender) %&gt;%
   hypothesize(null = &quot;independence&quot;) %&gt;%
   generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
@@ -136,31 +153,45 @@ experience_gender_null %&gt;% visualize() +
 ##   p_value
 ##     &lt;dbl&gt;
 ## 1       0</code></pre>
-<p>Answer:
-There is a significant difference between the average experience of the male and female executives. But it does not prove the correlation between salary and experience, so it can neither validate nor endanger the previous conclusion.</p>
+<div id="analysis-1" class="section level4">
+<h4>Analysis:</h4>
+<p>There is a significant difference between the average experience of the male and female executives. But it does not prove the correlation between salary and experience, so it can neither validate nor endanger the previous conclusion.</p>
 </div>
-<div id="relationship-salary---experience" class="section level2">
-<h2>Relationship Salary - Experience ?</h2>
-<pre class="r"><code>ggplot(omega, aes(experience, salary)) +
+</div>
+<div id="explore-the-relationship-between-professional-experience-and-salary" class="section level3">
+<h3>Explore the relationship between Professional Experience and Salary</h3>
+<pre class="r"><code>salary_exp &lt;- ggplot(
+  genderpay, 
+  aes(
+    x=experience, 
+    y=salary
+    )) +
   geom_point() +
   geom_smooth() +
   labs(
     title = &quot;The Relationship between Salary and Experience&quot;,
     x = &quot;Experience&quot;,
     y = &quot;Salary&quot;
-  )</code></pre>
-<p><img src="/blogs/gendercase_files/figure-html/salary_exp_scatter-1.png" width="648" style="display: block; margin: auto;" /></p>
+  )
+salary_exp &lt;- ggplotly(salary_exp)
+salary_exp</code></pre>
+<div id="htmlwidget-1" style="width:648px;height:648px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":[{"x":[16,25,15,33,16,19,32,34,1,44,7,14,33,19,24,3,17,19,21,31,6,35,20,23,2,2,3,16,0,29,3,0,1,2,21,0,8,11,5,11,18,2,0,19,0,15,4,20,0,0],"y":[81894.42,69517.43,68589.16,74880.8,65598.05,76840.49,78800.18,70033.14,63535.22,77871.9,66526.33,75705.93,78490.75,74468.23,71786.55,54768.19,67557.74,80863.01,80037.88,84576.11,61678.67,83338.41,77149.91,73230.53,58790.71,63225.8,63947.79,72302.26,47032.57,73436.81,66732.61,55490.18,62813.23,64669.78,78800.18,59718.98,70342.57,67867.17,62194.38,64566.64,69104.87,64669.78,56418.45,73643.1,51983.36,74055.66,66113.76,72611.68,54768.19,62813.23],"text":["experience: 16<br />salary: 81894","experience: 25<br />salary: 69517","experience: 15<br />salary: 68589","experience: 33<br />salary: 74881","experience: 16<br />salary: 65598","experience: 19<br />salary: 76840","experience: 32<br />salary: 78800","experience: 34<br />salary: 70033","experience:  1<br />salary: 63535","experience: 44<br />salary: 77872","experience:  7<br />salary: 66526","experience: 14<br />salary: 75706","experience: 33<br />salary: 78491","experience: 19<br />salary: 74468","experience: 24<br />salary: 71787","experience:  3<br />salary: 54768","experience: 17<br />salary: 67558","experience: 19<br />salary: 80863","experience: 21<br />salary: 80038","experience: 31<br />salary: 84576","experience:  6<br />salary: 61679","experience: 35<br />salary: 83338","experience: 20<br />salary: 77150","experience: 23<br />salary: 73231","experience:  2<br />salary: 58791","experience:  2<br />salary: 63226","experience:  3<br />salary: 63948","experience: 16<br />salary: 72302","experience:  0<br />salary: 47033","experience: 29<br />salary: 73437","experience:  3<br />salary: 66733","experience:  0<br />salary: 55490","experience:  1<br />salary: 62813","experience:  2<br />salary: 64670","experience: 21<br />salary: 78800","experience:  0<br />salary: 59719","experience:  8<br />salary: 70343","experience: 11<br />salary: 67867","experience:  5<br />salary: 62194","experience: 11<br />salary: 64567","experience: 18<br />salary: 69105","experience:  2<br />salary: 64670","experience:  0<br />salary: 56418","experience: 19<br />salary: 73643","experience:  0<br />salary: 51983","experience: 15<br />salary: 74056","experience:  4<br />salary: 66114","experience: 20<br />salary: 72612","experience:  0<br />salary: 54768","experience:  0<br />salary: 62813"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,0.556962025316456,1.11392405063291,1.67088607594937,2.22784810126582,2.78481012658228,3.34177215189873,3.89873417721519,4.45569620253165,5.0126582278481,5.56962025316456,6.12658227848101,6.68354430379747,7.24050632911392,7.79746835443038,8.35443037974684,8.91139240506329,9.46835443037975,10.0253164556962,10.5822784810127,11.1392405063291,11.6962025316456,12.253164556962,12.8101265822785,13.3670886075949,13.9240506329114,14.4810126582278,15.0379746835443,15.5949367088608,16.1518987341772,16.7088607594937,17.2658227848101,17.8227848101266,18.379746835443,18.9367088607595,19.4936708860759,20.0506329113924,20.6075949367089,21.1645569620253,21.7215189873418,22.2784810126582,22.8354430379747,23.3924050632911,23.9493670886076,24.506329113924,25.0632911392405,25.620253164557,26.1772151898734,26.7341772151899,27.2911392405063,27.8481012658228,28.4050632911392,28.9620253164557,29.5189873417721,30.0759493670886,30.6329113924051,31.1898734177215,31.746835443038,32.3037974683544,32.8607594936709,33.4177215189873,33.9746835443038,34.5316455696203,35.0886075949367,35.6455696202532,36.2025316455696,36.7594936708861,37.3164556962025,37.873417721519,38.4303797468354,38.9873417721519,39.5443037974684,40.1012658227848,40.6582278481013,41.2151898734177,41.7721518987342,42.3291139240506,42.8860759493671,43.4430379746835,44],"y":[57210.0982045704,58205.5555466125,59158.4038419612,60068.6876283593,60934.5052086786,61740.8187007422,62489.7860510022,63188.0073744936,63842.0827862512,64458.6124013099,65044.1963347045,65605.4347014698,66148.9276166407,66679.4380576866,67187.2486270746,67671.2633513597,68133.3101272599,68575.216851493,68998.8114207769,69405.9217318293,69798.3756813683,70178.0011661115,70546.6260827769,70906.0783280823,71258.1857987456,71604.7763914846,71947.6780030172,72288.724108435,72629.1969407801,72963.4295467346,73283.2686376074,73580.5609247079,73847.1531193451,74035.5700475507,74170.3516055498,74393.1194835172,74595.0894311898,74792.0183822195,74999.9201961735,75203.0570047288,75393.460424889,75571.8210716185,75738.8295598815,75895.1765046424,76041.5525208654,76178.6482235149,76307.1542275553,76427.7611479508,76541.1595996657,76648.0401976643,76749.093556911,76845.01029237,76936.4810190058,77024.1963517825,77108.8469056645,77191.1232956162,77271.7161366017,77351.3160435855,77429.9369872953,77504.5850306558,77574.795577896,77640.549484316,77701.8276052157,77758.6107958953,77810.8799116548,77858.6158077943,77901.7993396138,77940.4113624133,77974.4327314931,78003.8443021531,78028.6269296933,78048.7614694139,78064.2287766148,78075.0097065962,78081.0851146582,78082.4358561007,78079.0427862238,78070.8867603277,78057.9486337123,78040.2092616777],"text":["experience:  0.000<br />salary: 57210","experience:  0.557<br />salary: 58206","experience:  1.114<br />salary: 59158","experience:  1.671<br />salary: 60069","experience:  2.228<br />salary: 60935","experience:  2.785<br />salary: 61741","experience:  3.342<br />salary: 62490","experience:  3.899<br />salary: 63188","experience:  4.456<br />salary: 63842","experience:  5.013<br />salary: 64459","experience:  5.570<br />salary: 65044","experience:  6.127<br />salary: 65605","experience:  6.684<br />salary: 66149","experience:  7.241<br />salary: 66679","experience:  7.797<br />salary: 67187","experience:  8.354<br />salary: 67671","experience:  8.911<br />salary: 68133","experience:  9.468<br />salary: 68575","experience: 10.025<br />salary: 68999","experience: 10.582<br />salary: 69406","experience: 11.139<br />salary: 69798","experience: 11.696<br />salary: 70178","experience: 12.253<br />salary: 70547","experience: 12.810<br />salary: 70906","experience: 13.367<br />salary: 71258","experience: 13.924<br />salary: 71605","experience: 14.481<br />salary: 71948","experience: 15.038<br />salary: 72289","experience: 15.595<br />salary: 72629","experience: 16.152<br />salary: 72963","experience: 16.709<br />salary: 73283","experience: 17.266<br />salary: 73581","experience: 17.823<br />salary: 73847","experience: 18.380<br />salary: 74036","experience: 18.937<br />salary: 74170","experience: 19.494<br />salary: 74393","experience: 20.051<br />salary: 74595","experience: 20.608<br />salary: 74792","experience: 21.165<br />salary: 75000","experience: 21.722<br />salary: 75203","experience: 22.278<br />salary: 75393","experience: 22.835<br />salary: 75572","experience: 23.392<br />salary: 75739","experience: 23.949<br />salary: 75895","experience: 24.506<br />salary: 76042","experience: 25.063<br />salary: 76179","experience: 25.620<br />salary: 76307","experience: 26.177<br />salary: 76428","experience: 26.734<br />salary: 76541","experience: 27.291<br />salary: 76648","experience: 27.848<br />salary: 76749","experience: 28.405<br />salary: 76845","experience: 28.962<br />salary: 76936","experience: 29.519<br />salary: 77024","experience: 30.076<br />salary: 77109","experience: 30.633<br />salary: 77191","experience: 31.190<br />salary: 77272","experience: 31.747<br />salary: 77351","experience: 32.304<br />salary: 77430","experience: 32.861<br />salary: 77505","experience: 33.418<br />salary: 77575","experience: 33.975<br />salary: 77641","experience: 34.532<br />salary: 77702","experience: 35.089<br />salary: 77759","experience: 35.646<br />salary: 77811","experience: 36.203<br />salary: 77859","experience: 36.759<br />salary: 77902","experience: 37.316<br />salary: 77940","experience: 37.873<br />salary: 77974","experience: 38.430<br />salary: 78004","experience: 38.987<br />salary: 78029","experience: 39.544<br />salary: 78049","experience: 40.101<br />salary: 78064","experience: 40.658<br />salary: 78075","experience: 41.215<br />salary: 78081","experience: 41.772<br />salary: 78082","experience: 42.329<br />salary: 78079","experience: 42.886<br />salary: 78071","experience: 43.443<br />salary: 78058","experience: 44.000<br />salary: 78040"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(51,102,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,0.556962025316456,1.11392405063291,1.67088607594937,2.22784810126582,2.78481012658228,3.34177215189873,3.89873417721519,4.45569620253165,5.0126582278481,5.56962025316456,6.12658227848101,6.68354430379747,7.24050632911392,7.79746835443038,8.35443037974684,8.91139240506329,9.46835443037975,10.0253164556962,10.5822784810127,11.1392405063291,11.6962025316456,12.253164556962,12.8101265822785,13.3670886075949,13.9240506329114,14.4810126582278,15.0379746835443,15.5949367088608,16.1518987341772,16.7088607594937,17.2658227848101,17.8227848101266,18.379746835443,18.9367088607595,19.4936708860759,20.0506329113924,20.6075949367089,21.1645569620253,21.7215189873418,22.2784810126582,22.8354430379747,23.3924050632911,23.9493670886076,24.506329113924,25.0632911392405,25.620253164557,26.1772151898734,26.7341772151899,27.2911392405063,27.8481012658228,28.4050632911392,28.9620253164557,29.5189873417721,30.0759493670886,30.6329113924051,31.1898734177215,31.746835443038,32.3037974683544,32.8607594936709,33.4177215189873,33.9746835443038,34.5316455696203,35.0886075949367,35.6455696202532,36.2025316455696,36.7594936708861,37.3164556962025,37.873417721519,38.4303797468354,38.9873417721519,39.5443037974684,40.1012658227848,40.6582278481013,41.2151898734177,41.7721518987342,42.3291139240506,42.8860759493671,43.4430379746835,44,44,44,43.4430379746835,42.8860759493671,42.3291139240506,41.7721518987342,41.2151898734177,40.6582278481013,40.1012658227848,39.5443037974684,38.9873417721519,38.4303797468354,37.873417721519,37.3164556962025,36.7594936708861,36.2025316455696,35.6455696202532,35.0886075949367,34.5316455696203,33.9746835443038,33.4177215189873,32.8607594936709,32.3037974683544,31.746835443038,31.1898734177215,30.6329113924051,30.0759493670886,29.5189873417721,28.9620253164557,28.4050632911392,27.8481012658228,27.2911392405063,26.7341772151899,26.1772151898734,25.620253164557,25.0632911392405,24.506329113924,23.9493670886076,23.3924050632911,22.8354430379747,22.2784810126582,21.7215189873418,21.1645569620253,20.6075949367089,20.0506329113924,19.4936708860759,18.9367088607595,18.379746835443,17.8227848101266,17.2658227848101,16.7088607594937,16.1518987341772,15.5949367088608,15.0379746835443,14.4810126582278,13.9240506329114,13.3670886075949,12.8101265822785,12.253164556962,11.6962025316456,11.1392405063291,10.5822784810127,10.0253164556962,9.46835443037975,8.91139240506329,8.35443037974684,7.79746835443038,7.24050632911392,6.68354430379747,6.12658227848101,5.56962025316456,5.0126582278481,4.45569620253165,3.89873417721519,3.34177215189873,2.78481012658228,2.22784810126582,1.67088607594937,1.11392405063291,0.556962025316456,0,0],"y":[54215.8521912153,55649.3293405339,56902.4359151988,57961.5241151828,58834.6835234414,59545.1637205227,60138.1233877498,60653.0493680603,61118.1764464132,61553.5249543226,61974.0883581661,62391.9890879811,62817.6971437622,63263.2852866575,63752.4932145234,64279.3266317254,64829.9722791555,65389.2521900939,65941.4839091111,66471.7031429075,66967.4834654443,67421.2226980516,67832.1988728838,68207.3610563088,68560.2572050426,68908.4885578572,69270.6386508018,69663.3176563437,70100.8769834817,70547.0210526132,70951.9579410949,71290.0581704625,71567.0133554839,71775.0813257482,71916.1087967776,72124.7172403055,72309.1354577513,72481.730460386,72668.1880238303,72857.631802364,73039.7084578598,73213.0884394825,73376.3813886887,73528.2854786714,73667.7212711294,73793.9464494512,73906.6434032916,74005.9704837506,74092.5700868979,74167.5317030465,74232.3138044755,74288.632803652,74338.328905472,74383.2173761443,74424.9305195317,74464.7519408497,74503.4419110723,74541.0520573025,74575.2047730393,74596.3489668031,74601.0602631848,74586.9646930021,74551.7958330559,74493.4927895304,74410.2809616327,74300.7258070855,74163.7546862145,73998.6478116118,73805.0044075428,73582.6930026527,73331.7950483328,73052.5494164463,72745.3028146377,72410.4686658703,72048.4950534506,71659.8410865503,71244.9604118509,70804.2904079718,70338.2456733766,69847.2146187538,69847.2146187538,86233.2039046015,85777.6515940479,85337.4831126835,84913.1251605967,84505.0306256511,84113.6751758658,83739.5507473222,83383.1547385919,83044.9735223814,82725.4588110538,82424.9956016535,82143.8610554434,81882.1749132149,81639.843993013,81416.505808503,81211.4788616769,81023.7288022603,80851.8593773755,80694.1342756299,80548.5308926072,80412.8210945086,80284.6692015513,80161.5800298686,80039.9903621312,79917.4946503826,79792.7632917974,79665.1753274207,79534.6331325396,79401.3877810881,79265.8733093466,79128.5486922821,78989.7491124334,78849.5518121509,78707.665051819,78563.3499975787,78415.3837706014,78262.0675306133,78101.2777310743,77930.5537037544,77747.2123919183,77548.4822070936,77331.6523685167,77102.306304053,76881.0434046284,76661.5217267289,76424.5944143219,76296.0587693531,76127.2928832063,75871.0636789532,75614.5793341199,75379.8380408559,75157.5168980786,74914.1305605262,74624.7173552327,74301.064225112,73956.1143924486,73604.7955998558,73261.0532926699,72934.7796341713,72629.2678972922,72340.1403207512,72056.1389324426,71761.1815128921,71436.6479753643,71063.200070994,70622.0040396258,70095.5908287156,69480.1580895192,68818.8803149585,68114.3043112428,67363.6998482972,66565.9891260893,65722.965380927,64841.4487142546,63936.4736809616,63034.3268939158,62175.8511415358,61414.3717687235,60761.7817526911,60204.3442179256,54215.8521912153],"text":["experience:  0.000<br />salary: 57210","experience:  0.557<br />salary: 58206","experience:  1.114<br />salary: 59158","experience:  1.671<br />salary: 60069","experience:  2.228<br />salary: 60935","experience:  2.785<br />salary: 61741","experience:  3.342<br />salary: 62490","experience:  3.899<br />salary: 63188","experience:  4.456<br />salary: 63842","experience:  5.013<br />salary: 64459","experience:  5.570<br />salary: 65044","experience:  6.127<br />salary: 65605","experience:  6.684<br />salary: 66149","experience:  7.241<br />salary: 66679","experience:  7.797<br />salary: 67187","experience:  8.354<br />salary: 67671","experience:  8.911<br />salary: 68133","experience:  9.468<br />salary: 68575","experience: 10.025<br />salary: 68999","experience: 10.582<br />salary: 69406","experience: 11.139<br />salary: 69798","experience: 11.696<br />salary: 70178","experience: 12.253<br />salary: 70547","experience: 12.810<br />salary: 70906","experience: 13.367<br />salary: 71258","experience: 13.924<br />salary: 71605","experience: 14.481<br />salary: 71948","experience: 15.038<br />salary: 72289","experience: 15.595<br />salary: 72629","experience: 16.152<br />salary: 72963","experience: 16.709<br />salary: 73283","experience: 17.266<br />salary: 73581","experience: 17.823<br />salary: 73847","experience: 18.380<br />salary: 74036","experience: 18.937<br />salary: 74170","experience: 19.494<br />salary: 74393","experience: 20.051<br />salary: 74595","experience: 20.608<br />salary: 74792","experience: 21.165<br />salary: 75000","experience: 21.722<br />salary: 75203","experience: 22.278<br />salary: 75393","experience: 22.835<br />salary: 75572","experience: 23.392<br />salary: 75739","experience: 23.949<br />salary: 75895","experience: 24.506<br />salary: 76042","experience: 25.063<br />salary: 76179","experience: 25.620<br />salary: 76307","experience: 26.177<br />salary: 76428","experience: 26.734<br />salary: 76541","experience: 27.291<br />salary: 76648","experience: 27.848<br />salary: 76749","experience: 28.405<br />salary: 76845","experience: 28.962<br />salary: 76936","experience: 29.519<br />salary: 77024","experience: 30.076<br />salary: 77109","experience: 30.633<br />salary: 77191","experience: 31.190<br />salary: 77272","experience: 31.747<br />salary: 77351","experience: 32.304<br />salary: 77430","experience: 32.861<br />salary: 77505","experience: 33.418<br />salary: 77575","experience: 33.975<br />salary: 77641","experience: 34.532<br />salary: 77702","experience: 35.089<br />salary: 77759","experience: 35.646<br />salary: 77811","experience: 36.203<br />salary: 77859","experience: 36.759<br />salary: 77902","experience: 37.316<br />salary: 77940","experience: 37.873<br />salary: 77974","experience: 38.430<br />salary: 78004","experience: 38.987<br />salary: 78029","experience: 39.544<br />salary: 78049","experience: 40.101<br />salary: 78064","experience: 40.658<br />salary: 78075","experience: 41.215<br />salary: 78081","experience: 41.772<br />salary: 78082","experience: 42.329<br />salary: 78079","experience: 42.886<br />salary: 78071","experience: 43.443<br />salary: 78058","experience: 44.000<br />salary: 78040","experience: 44.000<br />salary: 78040","experience: 44.000<br />salary: 78040","experience: 43.443<br />salary: 78058","experience: 42.886<br />salary: 78071","experience: 42.329<br />salary: 78079","experience: 41.772<br />salary: 78082","experience: 41.215<br />salary: 78081","experience: 40.658<br />salary: 78075","experience: 40.101<br />salary: 78064","experience: 39.544<br />salary: 78049","experience: 38.987<br />salary: 78029","experience: 38.430<br />salary: 78004","experience: 37.873<br />salary: 77974","experience: 37.316<br />salary: 77940","experience: 36.759<br />salary: 77902","experience: 36.203<br />salary: 77859","experience: 35.646<br />salary: 77811","experience: 35.089<br />salary: 77759","experience: 34.532<br />salary: 77702","experience: 33.975<br />salary: 77641","experience: 33.418<br />salary: 77575","experience: 32.861<br />salary: 77505","experience: 32.304<br />salary: 77430","experience: 31.747<br />salary: 77351","experience: 31.190<br />salary: 77272","experience: 30.633<br />salary: 77191","experience: 30.076<br />salary: 77109","experience: 29.519<br />salary: 77024","experience: 28.962<br />salary: 76936","experience: 28.405<br />salary: 76845","experience: 27.848<br />salary: 76749","experience: 27.291<br />salary: 76648","experience: 26.734<br />salary: 76541","experience: 26.177<br />salary: 76428","experience: 25.620<br />salary: 76307","experience: 25.063<br />salary: 76179","experience: 24.506<br />salary: 76042","experience: 23.949<br />salary: 75895","experience: 23.392<br />salary: 75739","experience: 22.835<br />salary: 75572","experience: 22.278<br />salary: 75393","experience: 21.722<br />salary: 75203","experience: 21.165<br />salary: 75000","experience: 20.608<br />salary: 74792","experience: 20.051<br />salary: 74595","experience: 19.494<br />salary: 74393","experience: 18.937<br />salary: 74170","experience: 18.380<br />salary: 74036","experience: 17.823<br />salary: 73847","experience: 17.266<br />salary: 73581","experience: 16.709<br />salary: 73283","experience: 16.152<br />salary: 72963","experience: 15.595<br />salary: 72629","experience: 15.038<br />salary: 72289","experience: 14.481<br />salary: 71948","experience: 13.924<br />salary: 71605","experience: 13.367<br />salary: 71258","experience: 12.810<br />salary: 70906","experience: 12.253<br />salary: 70547","experience: 11.696<br />salary: 70178","experience: 11.139<br />salary: 69798","experience: 10.582<br />salary: 69406","experience: 10.025<br />salary: 68999","experience:  9.468<br />salary: 68575","experience:  8.911<br />salary: 68133","experience:  8.354<br />salary: 67671","experience:  7.797<br />salary: 67187","experience:  7.241<br />salary: 66679","experience:  6.684<br />salary: 66149","experience:  6.127<br />salary: 65605","experience:  5.570<br />salary: 65044","experience:  5.013<br />salary: 64459","experience:  4.456<br />salary: 63842","experience:  3.899<br />salary: 63188","experience:  3.342<br />salary: 62490","experience:  2.785<br />salary: 61741","experience:  2.228<br />salary: 60935","experience:  1.671<br />salary: 60069","experience:  1.114<br />salary: 59158","experience:  0.557<br />salary: 58206","experience:  0.000<br />salary: 57210","experience:  0.000<br />salary: 57210"],"type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"transparent","dash":"solid"},"fill":"toself","fillcolor":"rgba(153,153,153,0.4)","hoveron":"points","hoverinfo":"x+y","showlegend":false,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":40.8401826484018,"r":7.30593607305936,"b":37.2602739726027,"l":54.7945205479452},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"The Relationship between Salary and Experience","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.2,46.2],"tickmode":"array","ticktext":["0","10","20","30","40"],"tickvals":[0,10,20,30,40],"categoryorder":"array","categoryarray":["0","10","20","30","40"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Experience","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[45072.5383047699,88193.2355998316],"tickmode":"array","ticktext":["50000","60000","70000","80000"],"tickvals":[50000,60000,70000,80000],"categoryorder":"array","categoryarray":["50000","60000","70000","80000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Salary","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"6f021d5f0ccd":{"x":{},"y":{},"type":"scatter"},"6f024b4175cb":{"x":{},"y":{}}},"cur_data":"6f021d5f0ccd","visdat":{"6f021d5f0ccd":["function (y) ","x"],"6f024b4175cb":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><br/></p>
 </div>
-<div id="check-correlations-between-the-data" class="section level2">
-<h2>Check correlations between the data</h2>
-<pre class="r"><code>omega %&gt;% 
+<div id="check-correlations-between-the-data" class="section level3">
+<h3>Check correlations between the data</h3>
+<pre class="r"><code>genderpay %&gt;% 
   select(gender, experience, salary) %&gt;% #order variables they will appear in ggpairs()
   ggpairs(aes(colour=gender, alpha = 0.3))+
   theme_bw()</code></pre>
 <p><img src="/blogs/gendercase_files/figure-html/ggpairs-1.png" width="648" style="display: block; margin: auto;" /></p>
-<blockquote>
-<p>Look at the salary vs experience scatterplot. What can you infer from this plot? Explain in a couple of sentences</p>
-</blockquote>
-<p>Answer:
-Salary and experience do have strong correlation and the correlation is higher within female.</p>
+<div id="analysis-2" class="section level4">
+<h4>Analysis:</h4>
+<p>Salary and experience have a strong correlation and the correlation is higher for female category than male.</p>
+</div>
+</div>
+<div id="findings" class="section level3">
+<h3>Findings</h3>
+</div>
 </div>
