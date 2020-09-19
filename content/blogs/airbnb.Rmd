@@ -5,7 +5,6 @@ categories:
 date: "2020-9-16"
 description: Mask acceptance rate in the US
 draft: false
-image: copenhagen.jpg
 keywords: ""
 slug: airbnb
 title: Predicting the Price of Airbnb Stays in Copenhagen

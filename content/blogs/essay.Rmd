@@ -9,5 +9,11 @@ keywords: ""
 slug: essay
 title: Family Ownership and Downsizing in Switzerland
 ---
+<center>
+### Abstract
+</center>
+This thesis studies the relationship between corporate downsizing and ownership structure, founding family ownership in particular. Through the lens of socioemotional wealth (SEW) theory, we hypothesize that family firms downsize less than their non-family counterparts as they identify more with their firms, care about reputational damage, and take a long-term, potentially intergenerational, investment approach. Using OLS and logit regression models, we find a significantly negative relationship between family ownership and downsizing, indicating that family firms have a lower propensity to lay off employees than their non-family counterparts. Our findings also show that blockholders are a heterogeneous group. Firms owned by different non-family blockholders have disparate behaviors in terms of downsizing and asset disposal; founding family is a special type of blockholder, as family firms downsize less than firms with non-family blockholders in all the logit models of our analysis. Results further suggest that family firms under active family management downsize less than those managed by outside managers, suggesting that active family management better facilitates the implementation of the family’s long-term investment horizon in the firms. Additionally, family firms under founders’ management would downsize less than those under descendants’ management, indicating that founders’ stronger intention of preserving firms’ reputation further leads to fewer job cuts. The level of the family stake in the firm or family-name-bearing does not significantly impact the extent of downsizing. 
+
+
 
 Download my dissertation by clicking [here](https://drive.google.com/file/d/1XhrdcPsht1wRSEjUuy3xdKW-unQFNnGg/view?usp=sharing).
